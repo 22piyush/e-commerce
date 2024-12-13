@@ -72,15 +72,19 @@ const postSignUp = async (req, res) => {
     const isPasswordMatch = bcrypt.compareSync(password,user.password);
     
     if(isPasswordMatch){
-        const jwtToken  = jwt.sign({email:user.email}, process.env.JWT_SECRET, {expiresIn:"id"});
+        const jwtToken  = jwt.sign({email:user.email}, process.env.JWT_SECRET, {expiresIn:"1d"});
         
-        res.setHeader("Authorization", `${jwtToken}`);
+        res.setHeader("Authorization", `Bearer ${jwtToken}`);
 
-        return res.json({success:true, message:"Login Successful"});
+        return res.json({
+          success:true, 
+          token:jwtToken,
+          message:"Login Successful"
+        });
     }
     else{
         return res.status(400).json({success:false, message:"Invalid Credential"});
     }
-  }
+  };
 
   export {postSignUp, postLogin};

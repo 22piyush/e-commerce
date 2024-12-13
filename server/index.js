@@ -4,6 +4,7 @@ import cors from "cors";
 import mongoose from "mongoose";
 dotenv.config();
 
+import jwt from "jsonwebtoken";
 import { postLogin, postSignUp } from "./controllers/user.js";
 
 const app = express();
@@ -28,6 +29,35 @@ app.get("/health", (req, res) => {
 // Sign up endpoint
 app.post("/signup", postSignUp);
 app.post("/login", postLogin);
+
+app.get("/test", (req, res) => {
+  const token = req.headers.authorization;
+
+  if (!token) {
+    return res.status(401).json({
+      success: false,
+      message: "Unauthorized",
+    });
+  }
+
+  const tokenValue = token.split(" ")[1];
+ 
+  try {
+    const decoded = jwt.verify(tokenValue, process.env.JWT_SECRET);
+
+    return res.json({
+      success: true,
+      message: "Token is Valid",
+      data: decoded,
+    });
+  } catch (error) {
+    return res.status(401).json({
+      success: false,
+      message: "Token is invalid",
+    });
+  }
+});
+
 
 // Catch-all for undefined routes
 app.use("*", (req, res) => {
