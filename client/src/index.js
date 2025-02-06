@@ -6,12 +6,13 @@ import Home from './views/Home';
 import Login from './views/Login';
 import SignUp from './views/SignUp';
 import NotFound from './views/404';
+import 'element-theme-default';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 const router = createBrowserRouter([
   {
-    path: "/home",
+    path: "/",
     element: <Home/>, 
   },
   {
