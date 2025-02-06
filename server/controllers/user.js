@@ -56,7 +56,7 @@ const postSignup = async (req, res) => {
 
     return res.json({
       success: true,
-      message: "Signup successful",
+      message: "Signup successful, Please Login",
       data: {
         name: savedUser.name,
         email: savedUser.email,

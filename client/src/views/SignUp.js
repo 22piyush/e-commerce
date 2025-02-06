@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from "axios";
 import {toast, Toaster} from "react-hot-toast"
+import { Link } from "react-router";
 
 function SignUp() {
   const [signupData, setSignupData] = useState({
@@ -13,11 +14,29 @@ function SignUp() {
   });
 
   const processSignUp = async () => {
+    toast.loading("Please wait...");
     try {
       const response = await axios.post(`${process.env.REACT_APP_API_URL}/signup`, signupData);
+      toast.dismiss();
+
       toast.success("Signup successful!");
+      setSignupData({
+        name: '',
+        email: '',
+        phone: '',
+        address: '',
+        password: '',
+        rePassword: '',
+      })
       console.log(response);
+
+      setTimeout(() => {
+        window.location.href = "/login"
+      },2000);
+
+
     } catch (err) {
+      toast.dismiss();
       toast.error(err?.response?.data?.message || "Something went wrong. Please try again.");
       console.log(err);
     }
@@ -25,9 +44,9 @@ function SignUp() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-400 via-indigo-500 to-purple-600">
-      <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-lg">
-        <h2 className="text-3xl font-bold text-gray-800 text-center mb-4">Create an Account</h2>
-        <div className="space-y-4">
+      <div className="bg-white shadow-lg rounded-lg pl-8 pr-8 pt-5 pb-10 w-full max-w-lg">
+        <h2 className="text-3xl font-bold text-gray-800 text-center mb-3">Create an Account</h2>
+        <div className="space-y-3">
           <div>
             <label htmlFor="name" className="block text-sm font-medium text-gray-700">
               Name
@@ -147,6 +166,9 @@ function SignUp() {
           >
             Sign Up
           </button>
+          <div>
+            <p className=' text-black-600 '>Already have an account <Link to="/login" className=' text-red-500 cursor-pointer'><b>Login here!</b></Link></p>
+          </div>
         </div>
       </div>
       <Toaster/>
