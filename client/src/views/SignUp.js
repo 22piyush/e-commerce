@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from "axios";
 import {toast, Toaster} from "react-hot-toast"
 import { Link } from "react-router";
+import { getCurrentUser } from '../utils/common';
 
 function SignUp() {
   const [signupData, setSignupData] = useState({
@@ -41,6 +42,18 @@ function SignUp() {
       console.log(err);
     }
   };
+
+  useEffect(()=>{
+    // Check if user is already logged in
+    const currentUser = getCurrentUser();
+    if(currentUser){
+      toast.success("You are already logged in. Redirecting to dashboard...");
+      setTimeout(() => {
+        window.location.href = "/dashboard";
+      }, 3000);
+    }
+    
+  },[])
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-400 via-indigo-500 to-purple-600">
