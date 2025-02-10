@@ -14,6 +14,11 @@ function Dashboard() {
     const user = getCurrentUser();
     if (user) {
       setUser(user);
+    }else{
+      toast.error("Please login to access this page");
+       setTimeout(() => {
+        window.location.href = '/login';
+      }, 2000)
     }
   }, []);
 
