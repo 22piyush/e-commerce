@@ -8,6 +8,8 @@ import SignUp from './views/SignUp';
 import NotFound from './views/404';
 import 'element-theme-default';
 import Dashboard from './views/Dashboard';
+import UserOrders from './views/UserOrders';
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -27,6 +29,10 @@ const router = createBrowserRouter([
  {
   path: "/dashboard",
   element: <Dashboard/>
+},
+{
+  path: "/orders",
+  element: <UserOrders/>
 },
  {
    path: "/*",
